@@ -1,5 +1,6 @@
 package main;
 
+import api.GET;
 import api.POST;
 import com.github.pwrlabs.pwrj.protocol.PWRJ;
 import com.github.pwrlabs.pwrj.wallet.PWRFalconWallet;
@@ -20,6 +21,7 @@ public class Main {
         try {
             Synchronizer.sync(pwrj, vidaId, startingBlockNumber);
 
+            GET.run();
             POST.run();
         } catch (Exception e) {
             logger.error("Main:main:Failed to start synchronizer: " + e.getMessage());

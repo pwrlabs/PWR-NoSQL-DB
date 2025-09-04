@@ -1,7 +1,9 @@
 package core;
 
 import com.github.pwrlabs.pwrj.protocol.PWRJ;
+import com.github.pwrlabs.pwrj.protocol.VidaTransactionSubscription;
 import io.pwrlabs.util.encoders.ByteArrayWrapper;
+import lombok.Getter;
 import org.eclipse.jetty.util.SocketAddressResolver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,10 +20,12 @@ import java.util.concurrent.Future;
 
 public class Synchronizer {
     private static final Logger logger = LoggerFactory.getLogger(Synchronizer.class);
+    @Getter
+    private static VidaTransactionSubscription subscription;
     private static final Map<ByteArrayWrapper, Future<?>> futures = new ConcurrentHashMap<>();
 
     public static void sync(PWRJ pwrj, long vidaId, long startingBlock) throws IOException {
-        pwrj.subscribeToVidaTransactions(pwrj, vidaId, startingBlock, null, transaction -> {
+        subscription = pwrj.subscribeToVidaTransactions(pwrj, vidaId, startingBlock, null, transaction -> {
             String sender = transaction.getSender();
             if(sender.startsWith("0x")) sender = sender.substring(2);
 

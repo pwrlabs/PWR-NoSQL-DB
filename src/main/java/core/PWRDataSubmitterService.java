@@ -3,6 +3,7 @@ package core;
 import com.github.pwrlabs.pwrj.record.response.Response;
 import io.pwrlabs.util.encoders.BiResult;
 import main.Main;
+import main.Settings;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -40,7 +41,7 @@ public class PWRDataSubmitterService {
             isShuttingDown.set(true);
         }));
 
-        Thread thread = new Thread(() -> {
+        Settings.nonDaemonExecutor.execute(() -> {
             List<List<Object>> batch = new ArrayList<>();
             while(true) {
                 try {
@@ -70,10 +71,6 @@ public class PWRDataSubmitterService {
                 }
             }
         });
-
-        thread.setName("PWRDataSubmitterService-Thread");
-        thread.setDaemon(false);
-        thread.start();
     }
 
     private static void submitDataToPwrChain(List<List<Object>> batch) throws IOException {

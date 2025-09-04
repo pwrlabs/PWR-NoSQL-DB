@@ -60,7 +60,7 @@ public class Database {
             // ---- Clean shutdown: make sure logs/WAL/SST are closed properly ----
             Runtime.getRuntime().addShutdownHook(new Thread(() -> {
                 if (db != null) {
-                    while (!Synchronizer.getSubscription().isStopped()) {
+                    while (Synchronizer.getSubscription().isRunning()) {
                         try {
                             Thread.sleep(100);
                         } catch (InterruptedException e) {

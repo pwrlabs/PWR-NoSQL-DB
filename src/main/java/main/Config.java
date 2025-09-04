@@ -10,7 +10,7 @@ import java.nio.file.Files;
 public class Config {
 
     @Getter
-    private static String rpcUrl;
+    private static String rpcUrl, walletPassword;
 
     static {
         File configFile = new File("config.json");
@@ -19,7 +19,8 @@ public class Config {
             JSONObject config = new JSONObject();
             if(configFile.exists()) config = new JSONObject(Files.readString(configFile.toPath()));
 
-            rpcUrl = config.getString("https://pwrrpc.pwrlabs.io");
+            rpcUrl = config.optString("rpcUrl", "https://pwrrpc.pwrlabs.io");
+            walletPassword = config.optString("walletPassword", "walletPassword");
         } catch (Exception e) {
             System.err.println("Config:static:Failed to load config file");
             e.printStackTrace();

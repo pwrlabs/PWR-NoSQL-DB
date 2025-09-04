@@ -15,10 +15,12 @@ public class Main {
     public static final long vidaId = 7634785;
     public static final long startingBlockNumber = 920227;
     public static final PWRJ pwrj = new PWRJ(Config.getRpcUrl());
-    public static final PWRFalconWallet wallet = new PWRFalconWallet(12, pwrj);
+    public static PWRFalconWallet wallet;
 
     public static void main(String[] args) {
         try {
+            wallet = PWRFalconWallet.loadWallet(pwrj, "encryptedSeedPhrase.txt", Config.getWalletPassword());
+            System.out.println("Wallet address: " + wallet.getAddress());
             Synchronizer.sync(pwrj, vidaId, startingBlockNumber);
 
             GET.run();

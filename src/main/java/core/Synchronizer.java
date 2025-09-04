@@ -29,7 +29,7 @@ public class Synchronizer {
             String sender = transaction.getSender();
             if(sender.startsWith("0x")) sender = sender.substring(2);
 
-            if(sender.equalsIgnoreCase("0xYourAddressHere")) {
+            if(sender.equalsIgnoreCase("5358B93679273DC89CD941911CD1524ECC0217B9")) {
                 byte[] data = transaction.getData();
                 List<byte[]> dataDecoded = new ArrayList<>();
                 ByteBuffer buffer = ByteBuffer.wrap(data);

@@ -11,6 +11,8 @@ public class Config {
 
     @Getter
     private static String rpcUrl, walletPassword;
+    @Getter
+    private static long vidaStartingBlock;
 
     static {
         File configFile = new File("config.json");
@@ -21,6 +23,7 @@ public class Config {
 
             rpcUrl = config.optString("rpcUrl", "https://pwrrpc.pwrlabs.io");
             walletPassword = config.optString("walletPassword", "walletPassword");
+            vidaStartingBlock = config.optLong("vidaStartingBlock", 946921);
         } catch (Exception e) {
             System.err.println("Config:static:Failed to load config file");
             e.printStackTrace();

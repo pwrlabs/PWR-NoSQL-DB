@@ -51,7 +51,7 @@ public class POST {
 
                 PWRDataSubmitterService.submitData(projectIdBytes, key, value);
                 Future<?> future = Synchronizer.waitForNewValueToBeAdded(projectIdBytes, key, value);
-
+                logger.info("Request received amd data sent to blockchain. Waiting for data to be stored in the database...");
                 future.get(10000, TimeUnit.MILLISECONDS); // wait up to 10 seconds
 
                 return getSuccess("message", "Data stored successfully");

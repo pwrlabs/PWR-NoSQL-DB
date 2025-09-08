@@ -3,6 +3,7 @@ package core;
 import main.Settings;
 import org.rocksdb.*;
 
+import java.io.File;
 import java.nio.ByteBuffer;
 import java.util.Arrays;
 
@@ -12,6 +13,11 @@ public class Database {
     static {
         RocksDB.loadLibrary();
         try {
+            File dbDir = new File("data/rocksdb");
+            if (!dbDir.exists()) {
+                dbDir.mkdirs();
+            }
+
             Options options = new Options()
                     .setCreateIfMissing(true)
                     .setCreateMissingColumnFamilies(true)
@@ -38,7 +44,6 @@ public class Database {
 
             // ---- LOGGING: keep logs tiny & rotated ----
             options
-                    .setDbLogDir("data/rocksdb/logs")   // put logs under a subdir
                     .setInfoLogLevel(InfoLogLevel.FATAL_LEVEL) // cut INFO noise
                     .setKeepLogFileNum(2)               // keep at most 5 log files
                     .setMaxLogFileSize(8L * 1024 * 1024) // ~8 MB per log file
